@@ -7,6 +7,7 @@ library("ggplot2")
 # For this exercise you will again be working with the `diamonds` data set.
 # Use `?diamonds` to review details about this data set
 ?diamonds
+diamonds_sample <- sample_n(diamonds, 1000)
 
 ## Position Adjustments
 
@@ -48,13 +49,16 @@ library("ggplot2")
 # Another interesting plot: draw a plot of the diamonds price (y) by carat (x), 
 # using a heatmap of 2d bins (geom_bin2d)
 # What happens when you make the x and y channels scale logarithmically?
-
+ggplot(data = diamonds_sample) + geom_bin2d(mapping = aes(x=carat, y=price)) + 
+  scale_x_log10() + 
+  scale_y_log10()
 
 # Draw a scatter plot for the diamonds price (y) by carat (x). Color each point
 # by the clarity (Remember, this will take a while. Use a sample of the diamonds 
 # for faster results)
-
-
+ggplot(data = diamonds_sample) + geom_point(mapping = aes(x=carat, y=price, color=clarity)) + 
+  scale_color_brewer(palette = "Purples", direction = -1)
+  
 # Change the color of the previous plot using a ColorBrewer scale of your choice. 
 # What looks nice?
 
@@ -79,7 +83,9 @@ library("ggplot2")
 
 # Take the scatter plot of price by carat data (colored by clarity) and add 
 # _facets_ based on the diamond's `color`
-
+ggplot(data = diamonds_sample) + 
+  geom_point(mapping = aes(x=carat, y=price, color=clarity)) +
+  facet_wrap(-cut)
 
 
 ## Saving Plots
