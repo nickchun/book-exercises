@@ -24,11 +24,23 @@
   
   # A `textOutput()` output of a calculated value labeled `cost`
 
-
+ui <- fluidPage(
+  titlePanel("Cost Calculator"),
+  numericInput(inputId = "price", label = "Price (in dollars)", value = 0, min = 0),
+  numericInput(inputId = "quantity", label = "Quantity", value = 1, min=-1),
+  p(strong("Cost")),
+  textOutput(outputId = "cost")
+)
 
 # Define a `server` function (with appropriate arguments)
 # This function should perform the following:
 
+server <- function(input_list, output_list) {
+  output_list$cost <- renderText({
+    total <- input_list$price * input_list$quantity
+    return(total)
+  })
+}
   
   # Assign a reactive `renderText()` function to the output's `cost` value
   # The reactive expression should return the input `price` times the `quantity`
